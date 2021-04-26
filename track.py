@@ -26,7 +26,7 @@ def get_by_id(id_track):
     return tracks_lista, 200 
 
 def insert_track(id_album, name, duration):
-    flag_album = check_album(id_album, True)
+    flag_album, dict_album = check_album(id_album, True)
     if not flag_album:
         return "No existe album", 422
     flag_input = check_input(name, duration)
