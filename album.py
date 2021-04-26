@@ -58,7 +58,8 @@ def insert_album(id_artist, name, genre):
 
     db = get_db()
     cursor = db.cursor()
-    id_album = b64encode(name.encode()).decode('utf-8')
+    new_name = f"{name}:{id_artist}"
+    id_album = b64encode(new_name.encode()).decode('utf-8')
     if len(id_album) >= 22:
         id_album = id_album[:22]
     statement = "INSERT INTO album(id, artist_id, name, genre, artist, tracks, self) VALUES (?, ?, ?, ?, ?, ?, ?)"
