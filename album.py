@@ -14,7 +14,7 @@ def get_albums():
     return albums_lista, 200 
 
 def get_by_id(id_album):
-    flag_existe, dict_album = check_album(id_album, True)
+    flag_existe, dict_album = check_album(id_album, False, True)
     if not flag_existe:
         return "No existe", 404
 
@@ -27,7 +27,7 @@ def get_by_id(id_album):
     return albums_lista, 200 
 
 def get_album_tracks_by_id(id_album):
-    flag_existe, dict_album = check_album(id_album, True)
+    flag_existe, dict_album = check_album(id_album, False, True)
     if not flag_existe:
         return "No existe", 404
 
@@ -51,7 +51,7 @@ def insert_album(id_artist, name, genre):
     flag_artist, dict_artist = check_artist(id_artist, True)
     if not flag_artist:
         return "No existe artista", 422
-    flag_existe, dict_album = check_album(name, False)
+    flag_existe, dict_album = check_album(name, id_artist, False)
     if flag_existe:
         return dict_album, 409
 
@@ -107,11 +107,12 @@ def check_input(name, genre):
     else:
         return False
 
-def check_album(name, flag):
+def check_album(name, id_artist, flag):
     if flag:
         id_album = name
     else:
-        id_album = b64encode(name.encode()).decode('utf-8')
+        new_name = f"{name}:{id_artist}"
+        id_album = b64encode(new_name.encode()).decode('utf-8')
         if len(id_album) >= 22:
             id_album = id_album[:22]
     db = get_db()

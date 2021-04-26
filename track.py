@@ -32,17 +32,18 @@ def insert_track(id_album, name, duration):
         return "Input invalido", 400
     if len(id_album) >= 22:
         id_album = id_album[:22]
-    flag_album, dict_album = check_album(id_album, True)
+    flag_album, dict_album = check_album(id_album, False, True)
     if not flag_album:
         return "No existe album", 422
-    flag_existe, dict_track = check_exists(name, False)
+    flag_existe, dict_track = check_exists(name, id_album, False)
     if flag_existe:
         return dict_track, 409
 
 
     db = get_db()
     cursor = db.cursor()
-    id_track = b64encode(name.encode()).decode('utf-8')
+    new_name = f"{name}:{id_album}"
+    id_track = b64encode(new_name.encode()).decode('utf-8')
     if len(id_track) >= 22:
         id_track = id_track[:22]
     statement = "SELECT artist_id FROM album WHERE id = ?"
@@ -89,16 +90,15 @@ def check_input(name, duration):
     else:
         return False
 
-def check_exists(name, flag):
+def check_exists(name, id_album, flag):
     if flag:
         id_track = name
     else:
-        id_track = b64encode(name.encode()).decode('utf-8')
+        new_name = f"{name}:{id_album}"
+        id_track = b64encode(new_name.encode()).decode('utf-8')
         if len(id_track) >= 22:
             id_track = id_track[:22]
-    id_track = b64encode(name.encode()).decode('utf-8')
-    if len(id_track) >= 22:
-        id_track = id_track[:22]
+    
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id = ?"
