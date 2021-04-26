@@ -145,22 +145,27 @@ TODOS LO METODOS PUT
 @app.route("/artists/<id>/albums/play", methods=["PUT"])
 def play_tracks_artist(id):
     result, codigo = artist.play_tracks(id)
-    return jsonify(result)
+    return jsonify(result), codigo
 
 @app.route("/albums/<id>/tracks/play", methods=["PUT"])
 def play_tracks_album():
     result, codigo = album.play_tracks(id)
-    return jsonify(result)
+    return jsonify(result), codigo
 
 @app.route("/tracks/<id>/play", methods=["PUT"])
 def play_tracks():
     result, codigo = album.play_tracks(id)
-    return jsonify(result)
+    return jsonify(result), codigo
 
 """
 TODOS LOS INCORRECTOS
 """
-# @app.route('/artists', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+# def wrong_method():
+#     return jsonify("Wrong method"), 405
+
+# @app.route('/artists', methods=["HEAD"])
+# def wrong_method_1():
+#     return jsonify("Wrong method"), 405
 # @app.route("/artists/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 # @app.route("/artists/<id>/albums", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 # @app.route("/artists/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
