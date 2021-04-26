@@ -23,7 +23,6 @@ def insert_track(id_album, name, duration):
         id_track = id_track[:22]
     statement = "SELECT artist_id FROM album WHERE id_album = ?"
     cursor.execute(statement, [id_album])
-    db.commit()
     id_artist = cursor.fetchone()
     statement = "INSERT INTO track(id, album_id, name, duration, times_played, artist, album, self) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     artist = f"https://t2-tdi.herokuapp.com/artists/{id_artist}"
@@ -46,7 +45,6 @@ def play_tracks(id_track):
     cursor = db.cursor()
     statement = "SELECT times_played FROM track WHERE id = ?"
     cursor.execute(statement, [id_track])
-    db.commit()
     times_played = cursor.fetchone()
     statement = "UPDATE track SET times_played = ? WHERE id = ?"
     cursor.execute(statement, [times_played + 1, id_track])

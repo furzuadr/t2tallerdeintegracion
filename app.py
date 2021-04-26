@@ -30,13 +30,13 @@ TODOS LO METODOS GET
 
 @app.route('/artists', methods=["GET"])
 def get_artists():
-    artists = artist.get_artists()
-    return jsonify(artists)
+    artists, codigo = artist.get_artists()
+    return jsonify(artists), codigo
 
 @app.route("/artists/<id>", methods=["GET"])
 def get_artist_by_id(id):
-    artist, codigo = artist.get_by_id(id)
-    return jsonify(artist), codigo
+    artists, codigo = artist.get_by_id(id)
+    return jsonify(artists), codigo
 
 @app.route("/artists/<id>/albums", methods=["GET"])
 def get_artist_albums_by_id(id):
@@ -56,8 +56,8 @@ def get_albums():
 
 @app.route("/albums/<id>", methods=["GET"])
 def get_album_by_id(id):
-    album, codigo = album.get_by_id(id)
-    return jsonify(album), codigo
+    albums, codigo = album.get_by_id(id)
+    return jsonify(albums), codigo
 
 @app.route("/albums/<id>/tracks", methods=["GET"])
 def get_album_tracks_by_id(id):
@@ -71,8 +71,8 @@ def get_tracks():
 
 @app.route("/tracks/<id>", methods=["GET"])
 def get_track_by_id(id):
-    track, codigo = track.get_by_id(id)
-    return jsonify(track), codigo
+    tracks, codigo = track.get_by_id(id)
+    return jsonify(tracks), codigo
 
 
 """
@@ -85,8 +85,8 @@ def insert_artist():
     artist_details = request.get_json()
     name = artist_details["name"]
     age = artist_details["age"]
-    result = artist.insert_artist(name, age)
-    return jsonify(result)
+    result, codigo = artist.insert_artist(name, age)
+    return jsonify(result), codigo
 
 @app.route("/artists/<id>/albums", methods=["POST"])
 def insert_album(id):
@@ -113,17 +113,17 @@ TODOS LO METODOS DELETE
 @app.route("/artists/<id>", methods=["DELETE"])
 def delete_artist(id):
     result, codigo = artist.delete_artist(id)
-    return jsonify(result), codigo
+    return codigo
 
 @app.route("/albums/<id>", methods=["DELETE"])
 def delete_album(id):
     result, codigo = album.delete_album(id)
-    return jsonify(result), codigo
+    return codigo
 
 @app.route("/tracks/<id>", methods=["DELETE"])
 def delete_track(id):
     result, codigo = track.delete_track(id)
-    return jsonify(result), codigo
+    return codigo
 
 
 """
@@ -133,18 +133,18 @@ TODOS LO METODOS PUT
 
 @app.route("/artists/<id>/albums/play", methods=["PUT"])
 def play_tracks_artist(id):
-    result, codigo = artist.play_tracks(id)
-    return jsonify(result)
+    codigo = artist.play_tracks(id)
+    return codigo
 
 @app.route("/albums/<id>/tracks/play", methods=["PUT"])
 def play_tracks_album():
-    result, codigo = album.play_tracks(id)
-    return jsonify(result)
+    codigo = album.play_tracks(id)
+    return codigo
 
 @app.route("/tracks/<id>/play", methods=["PUT"])
 def play_tracks():
-    result, codigo = album.play_tracks(id)
-    return jsonify(result)
+    codigo = album.play_tracks(id)
+    return codigo
 
 
 

@@ -20,7 +20,6 @@ def get_album_tracks_by_id(id_album):
     cursor = db.cursor()
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id_album = ?"
     cursor.execute(statement, [id_album])
-    db.commit()
     return cursor.fetchall(), 200
 
 
@@ -51,12 +50,10 @@ def play_tracks(id_album):
     cursor = db.cursor()
     statement = "SELECT id FROM track WHERE id_album = ?"
     cursor.execute(statement, [id_album])
-    db.commit()
     track_album = cursor.fetchall()
     for track in track_album:
         statement = "SELECT times_played FROM track WHERE id = ?"
         cursor.execute(statement, [track])
-        db.commit()
         times_played = cursor.fetchone()
         statement = "UPDATE track SET times_played = ? WHERE id = ?"
         cursor.execute(statement, [times_played + 1, track])
