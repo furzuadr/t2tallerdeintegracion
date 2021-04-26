@@ -36,8 +36,8 @@ def get_album_tracks_by_id(id_album):
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id_album = ?"
     cursor.execute(statement, [id_album])
     tracks_lista = []
-    tracks = cursor.fetchall()
     for a in tracks:
+        a = a[0]
         tracks_lista.append({"id": a[0], "album_id": a[1], "name": a[2], "duration": a[3], "times_played": a[4], "artist": a[5], "album": a[6], "self": a[7]})
     return tracks_lista, 200
 
@@ -93,6 +93,7 @@ def play_tracks(id_album):
     cursor.execute(statement, [id_album])
     track_album = cursor.fetchall()
     for track in track_album:
+        track = track[0]
         statement = "SELECT times_played FROM track WHERE id = ?"
         cursor.execute(statement, [track])
         times_played = cursor.fetchone()

@@ -48,17 +48,17 @@ def get_artists_tracks_by_id(id_artist):
     db = get_db()
     cursor = db.cursor()
     tracks = []
-    statement = "SELECT id FROM album WHERE id_artist = ?"
+    statement = "SELECT id FROM album WHERE artist_id = ?"
     cursor.execute(statement, [id_artist])
     albums = cursor.fetchall()
     for album in albums:
-        statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id_album = ?"
-        cursor.execute(statement, [album])
+        statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE album_id = ?"
+        cursor.execute(statement, [album[0]])
         track_album = cursor.fetchall()
         tracks.append(track_album)
     tracks_lista = []
-    tracks = cursor.fetchall()
     for a in tracks:
+        a = a[0]
         tracks_lista.append({"id": a[0], "album_id": a[1], "name": a[2], "duration": a[3], "times_played": a[4], "artist": a[5], "album": a[6], "self": a[7]})
     return tracks_lista, 200 
 
@@ -109,11 +109,13 @@ def play_tracks(id_artist):
     cursor.execute(statement, [id_artist])
     albums = cursor.fetchall()
     for album in albums:
+        album = album[0]
         statement = "SELECT id FROM track WHERE id_album = ?"
         cursor.execute(statement, [album])
         track_album = cursor.fetchall()
         tracks.append(track_album)
     for track in tracks:
+        track = track[0]
         statement = "SELECT times_played FROM track WHERE id = ?"
         cursor.execute(statement, [track])
         times_played = cursor.fetchone()
