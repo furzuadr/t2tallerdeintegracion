@@ -33,8 +33,9 @@ def get_album_tracks_by_id(id_album):
 
     db = get_db()
     cursor = db.cursor()
-    statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id_album = ?"
+    statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE album_id = ?"
     cursor.execute(statement, [id_album])
+    tracks = cursor.fetchall()
     tracks_lista = []
     for a in tracks:
         a = a[0]
