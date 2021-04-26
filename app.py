@@ -113,17 +113,17 @@ TODOS LO METODOS DELETE
 @app.route("/artists/<id>", methods=["DELETE"])
 def delete_artist(id):
     result, codigo = artist.delete_artist(id)
-    return codigo
+    return jsonify(result), codigo
 
 @app.route("/albums/<id>", methods=["DELETE"])
 def delete_album(id):
     result, codigo = album.delete_album(id)
-    return codigo
+    return jsonify(result), codigo
 
 @app.route("/tracks/<id>", methods=["DELETE"])
 def delete_track(id):
     result, codigo = track.delete_track(id)
-    return codigo
+    return jsonify(result), codigo
 
 
 """
@@ -133,18 +133,18 @@ TODOS LO METODOS PUT
 
 @app.route("/artists/<id>/albums/play", methods=["PUT"])
 def play_tracks_artist(id):
-    codigo = artist.play_tracks(id)
-    return codigo
+    result, codigo = artist.play_tracks(id)
+    return jsonify(result)
 
 @app.route("/albums/<id>/tracks/play", methods=["PUT"])
 def play_tracks_album():
-    codigo = album.play_tracks(id)
-    return codigo
+    result, codigo = album.play_tracks(id)
+    return jsonify(result)
 
 @app.route("/tracks/<id>/play", methods=["PUT"])
 def play_tracks():
-    codigo = album.play_tracks(id)
-    return codigo
+    result, codigo = album.play_tracks(id)
+    return jsonify(result)
 
 
 
