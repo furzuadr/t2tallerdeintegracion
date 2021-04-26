@@ -105,22 +105,22 @@ def play_tracks(id_artist):
     db = get_db()
     cursor = db.cursor()
     tracks = []
-    statement = "SELECT id FROM album WHERE id_artist = ?"
+    statement = "SELECT id FROM album WHERE artist_id = ?"
     cursor.execute(statement, [id_artist])
     albums = cursor.fetchall()
     for album in albums:
         album = album[0]
-        statement = "SELECT id FROM track WHERE id_album = ?"
+        statement = "SELECT id FROM track WHERE album_id = ?"
         cursor.execute(statement, [album])
         track_album = cursor.fetchall()
         tracks.append(track_album)
     for track in tracks:
         track = track[0]
         statement = "SELECT times_played FROM track WHERE id = ?"
-        cursor.execute(statement, [track])
+        cursor.execute(statement, [track[0]])
         times_played = cursor.fetchone()
         statement = "UPDATE track SET times_played = ? WHERE id = ?"
-        cursor.execute(statement, [times_played[0] + 1, track])
+        cursor.execute(statement, [times_played[0] + 1, track[0]])
         db.commit()
     return "Played", 200
 
