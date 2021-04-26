@@ -43,12 +43,12 @@ def get_album_tracks_by_id(id_album):
 
 
 def insert_album(id_artist, name, genre):
+    flag_input = check_input(name, genre)
     if flag_input:
         return "Input invalido", 400
     flag_artist, dict_artist = check_artist(id_artist, True)
     if not flag_artist:
         return "No existe artista", 422
-    flag_input = check_input(name, genre)
     flag_existe, dict_album = check_album(name, False)
     if flag_existe:
         return dict_album, 409
