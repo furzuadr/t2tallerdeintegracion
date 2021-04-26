@@ -86,10 +86,10 @@ def insert_artist(name, age):
     return {"id": id_artist, "name": name, "age": age, "albums": albums, "tracks": tracks, "self": self_page}, 201
 
 def delete_artist(id_artist):
-    lag_existe, dict_album = check_album(id_album, True)
+    flag_existe, dict_album = check_artist(id_artist, True)
     if not flag_existe:
         return "No existe", 404
-        
+
     db = get_db()
     cursor = db.cursor()
     statement = "DELETE FROM artist WHERE id = ?"

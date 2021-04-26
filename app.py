@@ -86,14 +86,16 @@ def insert_artist():
         name = None
         age = None
     else:
-        if request.args.get("name"):
+        try: 
             name = artist_details["name"]
-        else:
+        except:
             name = None
-        if request.args.get("age"):
+        try: 
             age = artist_details["age"]
-        else:
+        except:
             age = None
+    print(request.args.get("name"))
+    print(age)
     result, codigo = artist.insert_artist(name, age)
     return jsonify(result), codigo
 
@@ -104,13 +106,13 @@ def insert_album(id):
         name = None
         genre = None
     else:
-        if request.args.get("name"):
+        try: 
             name = artist_details["name"]
-        else:
+        except:
             name = None
-        if request.args.get("genre"):
+        try:
             genre = artist_details["genre"]
-        else:
+        except:
             genre = None
     result, codigo = album.insert_album(id, name, genre)
     return jsonify(result), codigo
@@ -122,13 +124,13 @@ def insert_track(id):
         name = None
         duration = None
     else:
-        if request.args.get("name"):
+        try:
             name = artist_details["name"]
-        else:
+        except:
             name = None
-        if request.args.get("duration"):
+        try:
             duration = artist_details["duration"]
-        else:
+        except:
             duration = None
     result, codigo = track.insert_track(id, name, duration)
     return jsonify(result), codigo
