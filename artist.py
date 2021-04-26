@@ -92,4 +92,4 @@ def play_tracks(id_artist):
         statement = "UPDATE track SET times_played = ? WHERE id = ?"
         cursor.execute(statement, [times_played + 1, track])
         db.commit()
-    return 200
+    return "Played", 200

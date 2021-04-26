@@ -6,14 +6,19 @@ def get_tracks():
     cursor = db.cursor()
     query = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track"
     cursor.execute(query)
-    return cursor.fetchall()
+    tracks = cursor.fetchall()
+    for a in tracks:
+        tracks_lista.append({"id": a[0], "album_id": a[1], "name": a[2], "duration": a[3], "times_played": a[4], "artist": a[5], "album": a[6], "self": a[7]})
+    return tracks_lista, 200
 
 def get_by_id(id_track):
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id = ?"
     cursor.execute(statement, [id_track])
-    return cursor.fetchone(), 200
+    track = cursor.fetchone()
+    tracks_lista = {"id": track[0], "album_id": track[1], "name": track[2], "duration": track[3], "times_played": track[4], "artist": track[5], "album": track[6], "self": track[7]}
+    return tracks_lista, 200 
 
 def insert_track(id_album, name, duration):
     db = get_db()
@@ -30,7 +35,7 @@ def insert_track(id_album, name, duration):
     self_page = f"https://t2-tdi.herokuapp.com/tracks/{id_album}"
     cursor.execute(statement, [id_track, id_album, name, duration, 0, artist, album, self_page])
     db.commit()
-    return 201
+    return {"id": id_track, "album_id": id_album, "name": name, "duration": duration, "times_played": 0, "artist": artist, "album": album, "self": self_page}, 201
 
 def delete_track(id_track):
     db = get_db()
@@ -49,7 +54,7 @@ def play_tracks(id_track):
     statement = "UPDATE track SET times_played = ? WHERE id = ?"
     cursor.execute(statement, [times_played + 1, id_track])
     db.commit()
-    return True
+    return "Played", 200
 
 
 

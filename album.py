@@ -6,21 +6,31 @@ def get_albums():
     cursor = db.cursor()
     query = "SELECT id, artist_id, name, genre, artist, tracks, self FROM album"
     cursor.execute(query)
-    return cursor.fetchall()
+    albums_lista = []
+    albums = cursor.fetchall()
+    for a in albums:
+        albums_lista.append({"id": a[0], "artist_id": a[1], "name": a[2], "genre": a[3], "artist": a[4], "tracks": a[5], "self": a[5]})
+    return albums_lista, 200 
 
 def get_by_id(id_album):
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, artist_id, name, genre, artist, tracks, self FROM album WHERE id = ?"
     cursor.execute(statement, [id_album])
-    return cursor.fetchone(), 200
+    album = cursor.fetchone()
+    albums_lista = {"id": album[0], "artist_id": album[1], "name": album[2], "genre": album[3], "artist": album[4], "tracks": album[5], "self": album[6]}
+    return albums_lista, 200 
 
 def get_album_tracks_by_id(id_album):
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id_album = ?"
     cursor.execute(statement, [id_album])
-    return cursor.fetchall(), 200
+    tracks_lista = []
+    tracks = cursor.fetchall()
+    for a in tracks:
+        tracks_lista.append({"id": a[0], "album_id": a[1], "name": a[2], "duration": a[3], "times_played": a[4], "artist": a[5], "album": a[6], "self": a[7]})
+    return tracks_lista, 200
 
 
 def insert_album(id_artist, name, genre):
@@ -35,7 +45,7 @@ def insert_album(id_artist, name, genre):
     self_page = f"https://t2-tdi.herokuapp.com/albums/{id_album}"
     cursor.execute(statement, [id_album, id_artist, name, genre, artist, tracks, self_page])
     db.commit()
-    return 201
+    return {"id": id_album, "id_artist": id_artist, "name": name, "age": genre, "artist": artist, "tracks": tracks, "self": self_page}, 201
 
 def delete_album(id_album):
     db = get_db()
@@ -58,7 +68,7 @@ def play_tracks(id_album):
         statement = "UPDATE track SET times_played = ? WHERE id = ?"
         cursor.execute(statement, [times_played + 1, track])
         db.commit()
-    return True
+    return "Played", 200
 
 
 
