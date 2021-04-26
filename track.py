@@ -7,6 +7,7 @@ def get_tracks():
     cursor = db.cursor()
     query = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track"
     cursor.execute(query)
+    tracks_lista = []
     tracks = cursor.fetchall()
     for a in tracks:
         tracks_lista.append({"id": a[0], "album_id": a[1], "name": a[2], "duration": a[3], "times_played": a[4], "artist": a[5], "album": a[6], "self": a[7]})
@@ -42,7 +43,7 @@ def insert_track(id_album, name, duration):
     id_track = b64encode(name.encode()).decode('utf-8')
     if len(id_track) >= 22:
         id_track = id_track[:22]
-    statement = "SELECT artist_id FROM album WHERE id_album = ?"
+    statement = "SELECT artist_id FROM album WHERE id = ?"
     cursor.execute(statement, [id_album])
     id_artist = cursor.fetchone()
     statement = "INSERT INTO track(id, album_id, name, duration, times_played, artist, album, self) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
@@ -81,7 +82,7 @@ def play_tracks(id_track):
     return "Played", 200
 
 def check_input(name, duration):
-    if type(name) != str or type(duration) != float:
+    if type(name) != str or (type(duration) != float and type(duration) != int):
         return True
     else:
         return False
@@ -101,7 +102,7 @@ def check_exists(name, flag):
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id = ?"
     cursor.execute(statement, [id_track])
     track = cursor.fetchone()
-    if album:
+    if track:
         return True, {"id": track[0], "album_id": track[1], "name": track[2], "duration": track[3], "times_played": track[4], "artist": track[5], "album": track[6], "self": track[7]}
     else:
         return False, 0
