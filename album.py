@@ -36,7 +36,7 @@ def insert_album(id_artist, name, genre):
     self_page = f"https://t2-tdi.herokuapp.com/albums/{id_album}"
     cursor.execute(statement, [id_album, id_artist, name, genre, artist, tracks, self_page])
     db.commit()
-    return True
+    return 201
 
 def delete_album(id_album):
     db = get_db()

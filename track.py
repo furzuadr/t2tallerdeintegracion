@@ -31,7 +31,7 @@ def insert_track(id_album, name, duration):
     self_page = f"https://t2-tdi.herokuapp.com/tracks/{id_album}"
     cursor.execute(statement, [id_track, id_album, name, duration, 0, artist, album, self_page])
     db.commit()
-    return True
+    return 201
 
 def delete_track(id_track):
     db = get_db()

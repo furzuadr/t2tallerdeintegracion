@@ -51,7 +51,7 @@ def insert_artist(name, age):
     self_page = f"https://t2-tdi.herokuapp.com/artists/{id_artist}"
     cursor.execute(statement, [id_artist, name, age, albums, tracks, self_page])
     db.commit()
-    return True
+    return 201
 
 def delete_artist(id_artist):
     db = get_db()
