@@ -51,8 +51,8 @@ def get_artist_tracks_by_id(id):
 
 @app.route('/albums', methods=["GET"])
 def get_albums():
-    albums = album.get_albums()
-    return jsonify(albums)
+    albums, codigo = album.get_albums()
+    return jsonify(albums), codigo
 
 @app.route("/albums/<id>", methods=["GET"])
 def get_album_by_id(id):
@@ -66,8 +66,8 @@ def get_album_tracks_by_id(id):
 
 @app.route('/tracks', methods=["GET"])
 def get_tracks():
-    tracks = track.get_tracks()
-    return jsonify(tracks)
+    tracks, codigo = track.get_tracks()
+    return jsonify(tracks), codigo
 
 @app.route("/tracks/<id>", methods=["GET"])
 def get_track_by_id(id):
@@ -93,16 +93,16 @@ def insert_album(id):
     album_details = request.get_json()
     name = album_details["name"]
     genre = album_details["genre"]
-    result = album.insert_album(id, name, genre)
-    return jsonify(result)
+    result, codigo = album.insert_album(id, name, genre)
+    return jsonify(result), codigo
 
 @app.route("/albums/<id>/tracks", methods=["POST"])
 def insert_track(id):
     track_details = request.get_json()
     name = track_details["name"]
     duration = track_details["duration"]
-    result = track.insert_track(id, name, duration)
-    return jsonify(result)
+    result, codigo = track.insert_track(id, name, duration)
+    return jsonify(result), codigo
 
 
 
