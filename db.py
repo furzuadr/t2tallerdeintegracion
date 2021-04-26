@@ -3,11 +3,15 @@ import sqlite3
 
 def get_db():
     conn = sqlite3.connect("api.db")
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    conn.commit()
     return conn
 
 
 def create_tables():
-    tables = ["""CREATE TABLE IF NOT EXISTS artist(
+    tables = [
+                """CREATE TABLE IF NOT EXISTS artist(
                 id TEXT PRIMARY KEY,
                 name TEXT,
 				age INTEGER,

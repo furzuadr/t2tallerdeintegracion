@@ -13,6 +13,10 @@ def get_artists():
     return artistas_lista, 200 
 
 def get_by_id(id_artist):
+    flag_existe, dict_artista = check_artist(id_artist, True)
+    if not flag_existe:
+        return "No existe", 404
+    
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, name, age, albums, tracks, self FROM artist WHERE id = ?"
@@ -22,6 +26,10 @@ def get_by_id(id_artist):
     return artistas_lista, 200 
 
 def get_artists_albums_by_id(id_artist):
+    flag_existe, dict_artista = check_artist(id_artist, True)
+    if not flag_existe:
+        return "No existe", 404
+
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, artist_id, name, genre, artist, tracks, self FROM album WHERE artist_id = ?"
@@ -33,6 +41,10 @@ def get_artists_albums_by_id(id_artist):
     return albums_lista, 200 
 
 def get_artists_tracks_by_id(id_artist):
+    flag_existe, dict_artista = check_artist(id_artist, True)
+    if not flag_existe:
+        return "No existe", 404
+
     db = get_db()
     cursor = db.cursor()
     tracks = []
@@ -52,6 +64,14 @@ def get_artists_tracks_by_id(id_artist):
 
 
 def insert_artist(name, age):
+    flag_input = check_input(name, age)
+    if flag_input:
+        return "Input invalido", 400
+    flag_existe, dict_artista = check_artist(name, False)
+    if flag_existe:
+        return dict_artista, 409
+    
+
     db = get_db()
     cursor = db.cursor()
     id_artist = b64encode(name.encode()).decode('utf-8')
@@ -66,6 +86,10 @@ def insert_artist(name, age):
     return {"id": id_artist, "name": name, "age": age, "albums": albums, "tracks": tracks, "self": self_page}, 201
 
 def delete_artist(id_artist):
+    lag_existe, dict_album = check_album(id_album, True)
+    if not flag_existe:
+        return "No existe", 404
+        
     db = get_db()
     cursor = db.cursor()
     statement = "DELETE FROM artist WHERE id = ?"
@@ -74,6 +98,10 @@ def delete_artist(id_artist):
     return "Artista borrado", 204
 
 def play_tracks(id_artist):
+    flag_existe, dict_artista = check_artist(id_artist, True)
+    if not flag_existe:
+        return "No existe", 404
+
     db = get_db()
     cursor = db.cursor()
     tracks = []
@@ -93,3 +121,26 @@ def play_tracks(id_artist):
         cursor.execute(statement, [times_played + 1, track])
         db.commit()
     return "Played", 200
+
+def check_input(name, age):
+    if type(name) != str or type(age) != int:
+        return True
+    else:
+        return False
+
+def check_artist(name, flag):
+    if flag:
+        id_artist = name
+    else:
+        id_artist = b64encode(name.encode()).decode('utf-8')
+        if len(id_artist) >= 22:
+            id_artist = id_artist[:22]
+    db = get_db()
+    cursor = db.cursor()
+    statement = "SELECT id, name, age, albums, tracks, self FROM artist WHERE id = ?"
+    cursor.execute(statement, [id_artist])
+    artista = cursor.fetchone()
+    if artista:
+        return True, {"id": artista[0], "name": artista[1], "age": artista[2], "albums": artista[3], "tracks": artista[4], "self": artista[5]}
+    else:
+        return False, 0

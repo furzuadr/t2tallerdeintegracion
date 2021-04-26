@@ -1,5 +1,6 @@
 from db import get_db
 from base64 import b64encode
+from album import check_album
 
 def get_tracks():
     db = get_db()
@@ -12,6 +13,10 @@ def get_tracks():
     return tracks_lista, 200
 
 def get_by_id(id_track):
+    flag_existe, dict_track = check_track(id_track, True)
+    if not flag_existe:
+        return "No existe", 404
+
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id = ?"
@@ -21,6 +26,17 @@ def get_by_id(id_track):
     return tracks_lista, 200 
 
 def insert_track(id_album, name, duration):
+    flag_album = check_album(id_album, True)
+    if flag_album:
+        return "No existe album", 422
+    flag_input = check_input(name, duration)
+    if flag_input:
+        return "Input invalido", 400
+    flag_existe, dict_track = check_exists(name, False)
+    if flag_existe:
+        return dict_track, 409
+
+
     db = get_db()
     cursor = db.cursor()
     id_track = b64encode(name.encode()).decode('utf-8')
@@ -38,6 +54,10 @@ def insert_track(id_album, name, duration):
     return {"id": id_track, "album_id": id_album, "name": name, "duration": duration, "times_played": 0, "artist": artist, "album": album, "self": self_page}, 201
 
 def delete_track(id_track):
+    flag_existe, dict_track = check_track(id_track, True)
+    if not flag_existe:
+        return "No existe", 404
+        
     db = get_db()
     cursor = db.cursor()
     statement = "DELETE FROM track WHERE id = ?"
@@ -46,6 +66,10 @@ def delete_track(id_track):
     return "Track borrado", 204
 
 def play_tracks(id_track):
+    flag_existe, dict_track = check_track(id_track, True)
+    if not flag_existe:
+        return "No existe", 404
+
     db = get_db()
     cursor = db.cursor()
     statement = "SELECT times_played FROM track WHERE id = ?"
@@ -55,6 +79,32 @@ def play_tracks(id_track):
     cursor.execute(statement, [times_played + 1, id_track])
     db.commit()
     return "Played", 200
+
+def check_input(name, duration):
+    if type(name) != str or type(duration) != float:
+        return True
+    else:
+        return False
+
+def check_exists(name, flag):
+    if flag:
+        id_track = name
+    else:
+        id_track = b64encode(name.encode()).decode('utf-8')
+        if len(id_track) >= 22:
+            id_track = id_track[:22]
+    id_track = b64encode(name.encode()).decode('utf-8')
+    if len(id_track) >= 22:
+        id_track = id_track[:22]
+    db = get_db()
+    cursor = db.cursor()
+    statement = "SELECT id, album_id, name, duration, times_played, artist, album, self FROM track WHERE id = ?"
+    cursor.execute(statement, [id_track])
+    track = cursor.fetchone()
+    if album:
+        return True, {"id": track[0], "album_id": track[1], "name": track[2], "duration": track[3], "times_played": track[4], "artist": track[5], "album": track[6], "self": track[7]}
+    else:
+        return False, 0
 
 
 
