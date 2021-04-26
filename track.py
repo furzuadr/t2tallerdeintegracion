@@ -30,6 +30,8 @@ def insert_track(id_album, name, duration):
     flag_input = check_input(name, duration)
     if flag_input:
         return "Input invalido", 400
+    if len(id_album) >= 22:
+        id_album = id_album[:22]
     flag_album, dict_album = check_album(id_album, True)
     if not flag_album:
         return "No existe album", 422

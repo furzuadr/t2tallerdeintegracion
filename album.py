@@ -46,6 +46,8 @@ def insert_album(id_artist, name, genre):
     flag_input = check_input(name, genre)
     if flag_input:
         return "Input invalido", 400
+    if len(id_artist) >= 22:
+        id_artist = id_artist[:22]
     flag_artist, dict_artist = check_artist(id_artist, True)
     if not flag_artist:
         return "No existe artista", 422
