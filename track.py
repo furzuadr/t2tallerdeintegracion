@@ -14,7 +14,7 @@ def get_tracks():
     return tracks_lista, 200
 
 def get_by_id(id_track):
-    flag_existe, dict_track = check_track(id_track, True)
+    flag_existe, dict_track = check_exists(id_track, False, True)
     if not flag_existe:
         return "No existe", 404
 
