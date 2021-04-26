@@ -122,7 +122,6 @@ def insert_track(id):
         name = None
         duration = None
     else:
-        else:
         if request.args.get("name"):
             name = artist_details["name"]
         else:
