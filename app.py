@@ -86,8 +86,14 @@ def insert_artist():
         name = None
         age = None
     else:
-        name = artist_details["name"]
-        age = artist_details["age"]
+        if request.args.get("name"):
+            name = artist_details["name"]
+        else:
+            name = None
+        if request.args.get("age"):
+            age = artist_details["age"]
+        else:
+            age = None
     result, codigo = artist.insert_artist(name, age)
     return jsonify(result), codigo
 
@@ -98,8 +104,14 @@ def insert_album(id):
         name = None
         genre = None
     else:
-        name = album_details["name"]
-        genre = album_details["genre"]
+        if request.args.get("name"):
+            name = artist_details["name"]
+        else:
+            name = None
+        if request.args.get("genre"):
+            genre = artist_details["genre"]
+        else:
+            genre = None
     result, codigo = album.insert_album(id, name, genre)
     return jsonify(result), codigo
 
@@ -110,8 +122,15 @@ def insert_track(id):
         name = None
         duration = None
     else:
-        name = track_details["name"]
-        duration = track_details["duration"]
+        else:
+        if request.args.get("name"):
+            name = artist_details["name"]
+        else:
+            name = None
+        if request.args.get("duration"):
+            duration = artist_details["duration"]
+        else:
+            duration = None
     result, codigo = track.insert_track(id, name, duration)
     return jsonify(result), codigo
 
@@ -160,23 +179,43 @@ def play_tracks():
 """
 TODOS LOS INCORRECTOS
 """
-# def wrong_method():
-#     return jsonify("Wrong method"), 405
 
-# @app.route('/artists', methods=["HEAD"])
-# def wrong_method_1():
-#     return jsonify("Wrong method"), 405
-# @app.route("/artists/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/artists/<id>/albums", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/artists/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route('/albums', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/albums/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/albums/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route('/tracks', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/tracks/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/artists/<id>/albums/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/albums/<id>/tracks/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
-# @app.route("/tracks/<id>/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+@app.route('/artists', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_1():
+    return jsonify("Wrong method"), 405
+@app.route("/artists/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_2():
+    return jsonify("Wrong method"), 405
+@app.route("/artists/<id>/albums", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_3():
+    return jsonify("Wrong method"), 405
+@app.route("/artists/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_4():
+    return jsonify("Wrong method"), 405
+@app.route('/albums', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_5():
+    return jsonify("Wrong method"), 405
+@app.route("/albums/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_6():
+    return jsonify("Wrong method"), 405
+@app.route("/albums/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_7():
+    return jsonify("Wrong method"), 405
+@app.route('/tracks', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_8():
+    return jsonify("Wrong method"), 405
+@app.route("/tracks/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_9():
+    return jsonify("Wrong method"), 405
+@app.route("/artists/<id>/albums/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_10():
+    return jsonify("Wrong method"), 405
+@app.route("/albums/<id>/tracks/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_11():
+    return jsonify("Wrong method"), 405
+@app.route("/tracks/<id>/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+def wrong_method_12():
+    return jsonify("Wrong method"), 405
 
 
 
