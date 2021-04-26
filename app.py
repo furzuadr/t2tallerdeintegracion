@@ -83,24 +83,36 @@ TODOS LO METODOS POST
 @app.route("/artists", methods=["POST"])
 def insert_artist():
     artist_details = request.get_json()
-    name = artist_details["name"]
-    age = artist_details["age"]
+    if type(artist_details) == type(None):
+        name = None
+        age = None
+    else:
+        name = artist_details["name"]
+        age = artist_details["age"]
     result, codigo = artist.insert_artist(name, age)
     return jsonify(result), codigo
 
 @app.route("/artists/<id>/albums", methods=["POST"])
 def insert_album(id):
     album_details = request.get_json()
-    name = album_details["name"]
-    genre = album_details["genre"]
+    if type(album_details) == type(None):
+        name = None
+        genre = None
+    else:
+        name = album_details["name"]
+        genre = album_details["genre"]
     result, codigo = album.insert_album(id, name, genre)
     return jsonify(result), codigo
 
 @app.route("/albums/<id>/tracks", methods=["POST"])
 def insert_track(id):
     track_details = request.get_json()
-    name = track_details["name"]
-    duration = track_details["duration"]
+    if type(track_details) == type(None):
+        name = None
+        duration = None
+    else:
+        name = track_details["name"]
+        duration = track_details["duration"]
     result, codigo = track.insert_track(id, name, duration)
     return jsonify(result), codigo
 
