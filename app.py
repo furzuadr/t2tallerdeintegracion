@@ -102,16 +102,16 @@ def insert_artist():
 @app.route("/artists/<id>/albums", methods=["POST"])
 def insert_album(id):
     album_details = request.get_json()
-    if type(album_details) == type(None) or artist_details == {}:
+    if type(album_details) == type(None) or album_details == {}:
         name = None
         genre = None
     else:
         try: 
-            name = artist_details["name"]
+            name = album_details["name"]
         except:
             name = None
         try:
-            genre = artist_details["genre"]
+            genre = album_details["genre"]
         except:
             genre = None
     result, codigo = album.insert_album(id, name, genre)
@@ -120,16 +120,16 @@ def insert_album(id):
 @app.route("/albums/<id>/tracks", methods=["POST"])
 def insert_track(id):
     track_details = request.get_json()
-    if type(track_details) == type(None) or artist_details == {}:
+    if type(track_details) == type(None) or track_details == {}:
         name = None
         duration = None
     else:
         try:
-            name = artist_details["name"]
+            name = track_details["name"]
         except:
             name = None
         try:
-            duration = artist_details["duration"]
+            duration = track_details["duration"]
         except:
             duration = None
     result, codigo = track.insert_track(id, name, duration)

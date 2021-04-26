@@ -44,7 +44,7 @@ def get_album_tracks_by_id(id_album):
 
 def insert_album(id_artist, name, genre):
     flag_artist = check_artist(id_artist, True)
-    if flag_artist:
+    if not flag_artist:
         return "No existe artista", 422
     flag_input = check_input(name, genre)
     if flag_input:
@@ -71,7 +71,7 @@ def delete_album(id_album):
     lag_existe, dict_album = check_album(id_album, True)
     if not flag_existe:
         return "No existe", 404
-        
+
     db = get_db()
     cursor = db.cursor()
     statement = "DELETE FROM album WHERE id = ?"

@@ -27,7 +27,7 @@ def get_by_id(id_track):
 
 def insert_track(id_album, name, duration):
     flag_album = check_album(id_album, True)
-    if flag_album:
+    if not flag_album:
         return "No existe album", 422
     flag_input = check_input(name, duration)
     if flag_input:
@@ -57,7 +57,7 @@ def delete_track(id_track):
     flag_existe, dict_track = check_track(id_track, True)
     if not flag_existe:
         return "No existe", 404
-        
+
     db = get_db()
     cursor = db.cursor()
     statement = "DELETE FROM track WHERE id = ?"
