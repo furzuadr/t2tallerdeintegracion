@@ -181,55 +181,53 @@ def play_tracks(id):
 TODOS LOS INCORRECTOS
 """
 
-@app.route('/artists', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+@app.route('/artists', methods=["DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_1():
     return jsonify("Wrong method"), 405
-@app.route("/artists/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/artists/<id>", methods=["POST", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_2():
     return jsonify("Wrong method"), 405
-@app.route("/artists/<id>/albums", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/artists/<id>/albums", methods=["DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_3():
     return jsonify("Wrong method"), 405
-@app.route("/artists/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/artists/<id>/tracks", methods=["POST", "DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_4():
     return jsonify("Wrong method"), 405
-@app.route('/albums', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route('/albums', methods=["POST", "DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_5():
     return jsonify("Wrong method"), 405
-@app.route("/albums/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/albums/<id>", methods=["POST", "PUT","PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_6():
     return jsonify("Wrong method"), 405
-@app.route("/albums/<id>/tracks", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/albums/<id>/tracks", methods=["DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_7():
     return jsonify("Wrong method"), 405
-@app.route('/tracks', methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route('/tracks', methods=["POST", "DELETE", "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_8():
     return jsonify("Wrong method"), 405
-@app.route("/tracks/<id>", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/tracks/<id>", methods=["POST",  "PUT", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_9():
     return jsonify("Wrong method"), 405
-@app.route("/artists/<id>/albums/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/artists/<id>/albums/play", methods=["GET", "POST", "DELETE", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_10():
     return jsonify("Wrong method"), 405
-@app.route("/albums/<id>/tracks/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/albums/<id>/tracks/play", methods=["GET", "POST", "DELETE", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_11():
     return jsonify("Wrong method"), 405
-@app.route("/tracks/<id>/play", methods=["PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
+
+@app.route("/tracks/<id>/play", methods=["GET", "POST", "DELETE", "PATCH", "COPY", "HEAD", "OPTIONS", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK", "PROPFIND", "VIEW" ])
 def wrong_method_12():
     return jsonify("Wrong method"), 405
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
