@@ -72,7 +72,7 @@ def insert_album(id_artist, name, genre):
     return {"id": id_album, "id_artist": id_artist, "name": name, "genre": genre, "artist": artist, "tracks": tracks, "self": self_page}, 201
 
 def delete_album(id_album):
-    lag_existe, dict_album = check_album(id_album, True)
+    flag_existe, dict_album = check_album(id_album, False, True)
     if not flag_existe:
         return "No existe", 404
 
