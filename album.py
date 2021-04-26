@@ -91,7 +91,7 @@ def play_tracks(id_album):
 
     db = get_db()
     cursor = db.cursor()
-    statement = "SELECT id FROM track WHERE id_album = ?"
+    statement = "SELECT id FROM track WHERE album_id = ?"
     cursor.execute(statement, [id_album])
     track_album = cursor.fetchall()
     for track in track_album:
