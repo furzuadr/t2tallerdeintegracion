@@ -58,7 +58,7 @@ def insert_track(id_album, name, duration):
     return {"id": id_track, "album_id": id_album, "name": name, "duration": duration, "times_played": 0, "artist": artist, "album": album, "self": self_page}, 201
 
 def delete_track(id_track):
-    flag_existe, dict_track = check_track(id_track, True)
+    flag_existe, dict_track = check_exists(id_track, True, True)
     if not flag_existe:
         return "No existe", 404
 
@@ -70,7 +70,7 @@ def delete_track(id_track):
     return "Track borrado", 204
 
 def play_tracks(id_track):
-    flag_existe, dict_track = check_track(id_track, True)
+    flag_existe, dict_track = check_exists(id_track, True, True)
     if not flag_existe:
         return "No existe", 404
 
@@ -80,7 +80,7 @@ def play_tracks(id_track):
     cursor.execute(statement, [id_track])
     times_played = cursor.fetchone()
     statement = "UPDATE track SET times_played = ? WHERE id = ?"
-    cursor.execute(statement, [times_played + 1, id_track])
+    cursor.execute(statement, [times_played[0] + 1, id_track])
     db.commit()
     return "Played", 200
 

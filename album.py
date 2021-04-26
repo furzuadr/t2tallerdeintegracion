@@ -84,8 +84,9 @@ def delete_album(id_album):
     return "Album borrado", 204
 
 def play_tracks(id_album):
-    flag_existe, dict_album = check_album(id_album, True)
+    flag_existe, dict_album = check_album(id_album, False, True)
     if not flag_existe:
+        print("pasando")
         return "No existe", 404
 
     db = get_db()
@@ -99,7 +100,7 @@ def play_tracks(id_album):
         cursor.execute(statement, [track])
         times_played = cursor.fetchone()
         statement = "UPDATE track SET times_played = ? WHERE id = ?"
-        cursor.execute(statement, [times_played + 1, track])
+        cursor.execute(statement, [times_played[0] + 1, track])
         db.commit()
     return "Played", 200
 

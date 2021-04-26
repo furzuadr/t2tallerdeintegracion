@@ -168,13 +168,13 @@ def play_tracks_artist(id):
     return jsonify(result), codigo
 
 @app.route("/albums/<id>/tracks/play", methods=["PUT"])
-def play_tracks_album():
+def play_tracks_album(id):
     result, codigo = album.play_tracks(id)
     return jsonify(result), codigo
 
 @app.route("/tracks/<id>/play", methods=["PUT"])
-def play_tracks():
-    result, codigo = album.play_tracks(id)
+def play_tracks(id):
+    result, codigo = track.play_tracks(id)
     return jsonify(result), codigo
 
 """
